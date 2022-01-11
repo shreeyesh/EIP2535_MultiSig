@@ -14,6 +14,8 @@ import "../interfaces/IAccessRegistry.sol";
 library LibDiamond {
     bytes32 constant DIAMOND_STORAGE_POSITION = keccak256("diamond.standard.diamond.storage");
 
+//structs [Diamond + Multisig]
+
     struct FacetAddressAndSelectorPosition {
         address facetAddress;
         uint16 selectorPosition;
@@ -37,6 +39,9 @@ library LibDiamond {
          // mapping from tx index => owner => bool
     mapping(uint => mapping(address => bool)) /*public*/ isConfirmed;
     }
+    
+    //Functions [Diamond + Multisig]
+
 
     function diamondStorage() internal pure returns (DiamondStorage storage ds) {
         bytes32 position = DIAMOND_STORAGE_POSITION;
