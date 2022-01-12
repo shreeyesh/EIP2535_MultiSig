@@ -26,7 +26,7 @@ contract MultiSigWallet is IMultiSig {
 
         numConfirmationsRequired = _numConfirmationsRequired;
     }
-receive() external payable {
+	receive() external payable {
     	LibDiamond.DiamondStorage storage ds = LibDiamond.diamondStorage(); 
 		 payable(ds.contractOwner).transfer(_msgValue());
 	}
