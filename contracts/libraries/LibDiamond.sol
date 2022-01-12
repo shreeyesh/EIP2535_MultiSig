@@ -38,15 +38,28 @@ library LibDiamond {
     mapping(uint => mapping(address => bool)) /*public*/ isConfirmed;
     }
 
+
+    event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);
+    event Deposit(address indexed sender, uint amount, uint balance);
+    event SubmitTransaction(
+        address indexed owner,
+        uint indexed txIndex,
+        address indexed to,
+        uint value,
+        bytes data);
+    
+    event ConfirmTransaction(address indexed owner, uint indexed txIndex);
+    event RevokeConfirmation(address indexed owner, uint indexed txIndex);
+    event ExecuteTransaction(address indexed owner, uint indexed txIndex);
+    event DiamondCut(IDiamondCut.FacetCut[] _diamondCut, address _init, bytes _calldata);
+
+
     function diamondStorage() internal pure returns (DiamondStorage storage ds) {
         bytes32 position = DIAMOND_STORAGE_POSITION;
         assembly {
             ds.slot := position
         }
     }
-
-    event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);
-
     function setContractOwner(address _newOwner) internal {
         DiamondStorage storage ds = diamondStorage();
         address previousOwner = ds.contractOwner;
@@ -61,8 +74,6 @@ library LibDiamond {
     function enforceIsContractOwner() internal view {
         require(msg.sender == diamondStorage().contractOwner, "LibDiamond: Must be contract owner");
     }
-
-    event DiamondCut(IDiamondCut.FacetCut[] _diamondCut, address _init, bytes _calldata);
 
     // Internal function version of diamondCut
     function diamondCut(
@@ -160,7 +171,7 @@ library LibDiamond {
         emit RevokeConfirmation(msg.sender, _txIndex);
     }
 
-    unction getOwners() public view returns (address[] memory) {
+    function getOwners() public view returns (address[] memory) {
         return owners;
     }
 
@@ -187,7 +198,10 @@ library LibDiamond {
             transaction.data,
             transaction.executed,
             transaction.numConfirmations
-        );
+            )
+        }
+    }
+
 
     function addFunctions(address _facetAddress, bytes4[] memory _functionSelectors) internal {
         require(_functionSelectors.length > 0, "LibDiamondCut: No selectors in facet to cut");

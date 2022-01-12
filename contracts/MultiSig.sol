@@ -38,7 +38,7 @@ receive() external payable {
    
     // LibDiamond.DiamondStorage storage ds = LibDiamond.diamondStorage(); 
     Transaction[] transactions;
-    DepositRecords storage deposit = ds.indDepositRecord[_account][_market][_commitment];
+    // DepositRecords storage deposit = ds.indDepositRecord[_account][_market][_commitment];
 
 
     modifier onlyOwner() {
