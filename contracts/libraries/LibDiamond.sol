@@ -97,11 +97,24 @@ library LibDiamond {
         initializeDiamondCut(_init, _calldata);
     }
 
+    // MultiSig Functions
+
+    function getTransaction(uint _txIndex)
+        public
+        view
+        returns (
+            address to,
+            uint value,
+            bytes memory data,
+            bool executed,
+            uint numConfirmations
+        )
+
     function submitTransaction(
         address _to,
         uint _value,
         bytes memory _data
-    ) public onlyOwner {
+    ) public  {
         uint txIndex = transactions.length;
 
         transactions.push(
@@ -119,9 +132,6 @@ library LibDiamond {
 
         function executeTransaction(uint _txIndex)
         public
-        onlyOwner
-        txExists(_txIndex)
-        notExecuted(_txIndex)
     {
         Transaction storage transaction = transactions[_txIndex];
 
@@ -143,10 +153,8 @@ library LibDiamond {
 
      function confirmTransaction(uint _txIndex)
         public
-        onlyOwner
-        txExists(_txIndex)
-        notExecuted(_txIndex)
-        notConfirmed(_txIndex)
+        
+        
     {
         Transaction storage transaction = transactions[_txIndex];
         transaction.numConfirmations += 1;
@@ -157,9 +165,8 @@ library LibDiamond {
 
     function revokeConfirmation(uint _txIndex)
         public
-        onlyOwner
-        txExists(_txIndex)
-        notExecuted(_txIndex)
+        
+        
     {
         Transaction storage transaction = transactions[_txIndex];
 
@@ -179,16 +186,7 @@ library LibDiamond {
         return transactions.length;
     }
 
-    function getTransaction(uint _txIndex)
-        public
-        view
-        returns (
-            address to,
-            uint value,
-            bytes memory data,
-            bool executed,
-            uint numConfirmations
-        )
+    
     {
         Transaction storage transaction = transactions[_txIndex];
 
@@ -198,7 +196,7 @@ library LibDiamond {
             transaction.data,
             transaction.executed,
             transaction.numConfirmations
-            )
+            );
         }
     
 

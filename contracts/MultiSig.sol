@@ -40,6 +40,54 @@ contract MultiSigWallet is IMultiSig {
     Transaction[] transactions;
     // DepositRecords storage deposit = ds.indDepositRecord[_account][_market][_commitment];
 
+    function getTransaction(uint _txIndex)
+        public
+        view
+        returns (
+            address to,
+            uint value,
+            bytes memory data,
+            bool executed,
+            uint numConfirmations
+        );
+        {
+    	LibDiamond.DiamondStorage storage ds = LibDiamond.diamondStorage(); 
+        LibDiamond.getTransaction(uint _txIndex);
+        }
+
+    function submitTransaction(
+        address _to,
+        uint _value,
+        bytes memory _data
+    ) external  {
+        LibDiamond.DiamondStorage storage ds = LibDiamond.diamondStorage(); 
+        LibDiamond.submitTransaction(
+        address _to,
+        uint _value,
+        bytes memory _data
+        )
+    }
+
+     function executeTransaction(uint _txIndex) external{
+        LibDiamond.DiamondStorage storage ds = LibDiamond.diamondStorage(); 
+        LibDiamond.executeTransaction(uint _txIndex);
+     }
+    function confirmTransaction(uint _txIndex) external{
+        LibDiamond.DiamondStorage storage ds = LibDiamond.diamondStorage(); 
+        LibDiamond.confirmTransaction(uint _txIndex);
+
+    }
+
+    function revokeConfirmation(uint _txIndex) external{
+        LibDiamond.DiamondStorage storage ds = LibDiamond.diamondStorage(); 
+        LibDiamond.revokeConfirmation(uint _txIndex);
+
+    }
+     
+
+
+
+        
 
     modifier onlyOwner() {
         require(isOwner[msg.sender], "not owner");
