@@ -14,8 +14,6 @@ import "../interfaces/IAccessRegistry.sol";
 library LibDiamond {
     bytes32 constant DIAMOND_STORAGE_POSITION = keccak256("diamond.standard.diamond.storage");
 
-//structs [Diamond + Multisig]
-
     struct FacetAddressAndSelectorPosition {
         address facetAddress;
         uint16 selectorPosition;
@@ -39,10 +37,7 @@ library LibDiamond {
          // mapping from tx index => owner => bool
     mapping(uint => mapping(address => bool)) /*public*/ isConfirmed;
     }
-    
-    //Functions [Diamond + Multisig]
-
-
+    // Events
 
     event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);
     event Deposit(address indexed sender, uint amount, uint balance);
@@ -58,7 +53,7 @@ library LibDiamond {
     event ExecuteTransaction(address indexed owner, uint indexed txIndex);
     event DiamondCut(IDiamondCut.FacetCut[] _diamondCut, address _init, bytes _calldata);
 
-
+    // functions
     function diamondStorage() internal pure returns (DiamondStorage storage ds) {
         bytes32 position = DIAMOND_STORAGE_POSITION;
         assembly {
@@ -205,7 +200,7 @@ library LibDiamond {
             transaction.numConfirmations
             )
         }
-    }
+    
 
 
     function addFunctions(address _facetAddress, bytes4[] memory _functionSelectors) internal {
