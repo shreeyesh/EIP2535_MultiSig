@@ -109,3 +109,4 @@ contract AccessRegistry is IAccessRegistry {
         require(LibDiamond._hasAdminRole(ds.superAdmin, ds.contractOwner), "Admin role does not exist.");
         _;
     }
+}

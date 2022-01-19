@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.7.6;
-interface IMultiSig{
+interface IMultiSig
+{
 function submitTransaction(
         address _to,
         uint _value,
@@ -20,7 +21,5 @@ function getTransaction(uint _txIndex)
             bytes memory data,
             bool executed,
             uint numConfirmations
-        )
-
-
+        );
 }
