@@ -84,10 +84,16 @@ contract MultiSigWallet is IMultiSig {
 
     }
      
+    function getOwners() external view returns (address[] memory) {
+        LibDiamond.DiamondStorage storage ds = LibDiamond.diamondStorage(); 
+        LibDiamond.getOwners();
+    } 
 
+    function getTransactionCount() external view returns (uint){
+        LibDiamond.DiamondStorage storage ds = LibDiamond.diamondStorage(); 
+        LibDiamond.getTransactionCount();
 
-
-        
+    }
 
     modifier onlyOwner() {
         require(isOwner[msg.sender], "not owner");
