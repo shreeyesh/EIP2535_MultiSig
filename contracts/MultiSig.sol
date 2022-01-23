@@ -41,7 +41,7 @@ contract MultiSigWallet is IMultiSig {
     // DepositRecords storage deposit = ds.indDepositRecord[_account][_market][_commitment];
 
     function getTransaction(uint _txIndex)
-        public
+        external
         view
         returns (
             address to,
@@ -49,7 +49,7 @@ contract MultiSigWallet is IMultiSig {
             bytes memory data,
             bool executed,
             uint numConfirmations
-        );
+        )
         {
     	LibDiamond.DiamondStorage storage ds = LibDiamond.diamondStorage(); 
         LibDiamond.getTransaction(uint _txIndex);
@@ -65,7 +65,7 @@ contract MultiSigWallet is IMultiSig {
         address _to,
         uint _value,
         bytes memory _data
-        )
+        );
     }
 
      function executeTransaction(uint _txIndex) external{

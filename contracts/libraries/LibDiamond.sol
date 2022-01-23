@@ -36,7 +36,18 @@ library LibDiamond {
         uint numConfirmations;
          // mapping from tx index => owner => bool
     mapping(uint => mapping(address => bool)) /*public*/ isConfirmed;
-    }
+    
+
+     Transaction storage transaction = transactions[_txIndex];
+        return (
+            transaction.to,
+            transaction.value,
+            transaction.data,
+            transaction.executed,
+            transaction.numConfirmations
+            );
+        }
+    
     // Events
 
     event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);
@@ -108,7 +119,7 @@ library LibDiamond {
             bytes memory data,
             bool executed,
             uint numConfirmations
-        )
+        );
 
     function submitTransaction(
         address _to,
@@ -186,18 +197,6 @@ library LibDiamond {
         return transactions.length;
     }
 
-    
-    {
-        Transaction storage transaction = transactions[_txIndex];
-
-        return (
-            transaction.to,
-            transaction.value,
-            transaction.data,
-            transaction.executed,
-            transaction.numConfirmations
-            );
-        }
     
 
 
