@@ -14,6 +14,8 @@ import "../interfaces/IAccessRegistry.sol";
 library LibDiamond {
     bytes32 constant DIAMOND_STORAGE_POSITION = keccak256("diamond.standard.diamond.storage");
 
+    // Diamond Sructs
+
     struct FacetAddressAndSelectorPosition {
         address facetAddress;
         uint16 selectorPosition;
@@ -27,6 +29,9 @@ library LibDiamond {
         // owner of the contract
         address contractOwner;
     }
+
+        // MultiSig Sructs
+
 
     struct Transaction {
         address to;
@@ -65,6 +70,7 @@ library LibDiamond {
     event DiamondCut(IDiamondCut.FacetCut[] _diamondCut, address _init, bytes _calldata);
 
     // functions
+    
     function diamondStorage() internal pure returns (DiamondStorage storage ds) {
         bytes32 position = DIAMOND_STORAGE_POSITION;
         assembly {
@@ -87,6 +93,7 @@ library LibDiamond {
     }
 
     // Internal function version of diamondCut
+
     function diamondCut(
         IDiamondCut.FacetCut[] memory _diamondCut,
         address _init,
@@ -198,7 +205,7 @@ library LibDiamond {
     }
 
     
-
+    // Diamond Upgrade Functions 
 
     function addFunctions(address _facetAddress, bytes4[] memory _functionSelectors) internal {
         require(_functionSelectors.length > 0, "LibDiamondCut: No selectors in facet to cut");
