@@ -28,12 +28,12 @@ library LibDiamond {
         mapping(bytes4 => bool) supportedInterfaces;
         // owner of the contract
         address contractOwner;
-    }
+    
 
         // MultiSig Sructs
 
 
-    struct Transaction {
+    // struct Transaction {
         address to;
         uint value;
         bytes data;
@@ -43,14 +43,14 @@ library LibDiamond {
     mapping(uint => mapping(address => bool)) /*public*/ isConfirmed;
     
 
-     Transaction storage transaction = transactions[_txIndex];
-        return (
-            transaction.to,
-            transaction.value,
-            transaction.data,
-            transaction.executed,
-            transaction.numConfirmations
-            );
+    //  Transaction storage transaction = transactions[_txIndex];
+    //     return (
+    //         transaction.to,
+    //         transaction.value,
+    //         transaction.data,
+    //         transaction.executed,
+    //         transaction.numConfirmations
+    //         );
         }
     
     // Events
@@ -70,7 +70,7 @@ library LibDiamond {
     event DiamondCut(IDiamondCut.FacetCut[] _diamondCut, address _init, bytes _calldata);
 
     // functions
-    
+
     function diamondStorage() internal pure returns (DiamondStorage storage ds) {
         bytes32 position = DIAMOND_STORAGE_POSITION;
         assembly {

@@ -51,8 +51,17 @@ contract MultiSigWallet is IMultiSig {
             uint numConfirmations
         )
         {
+            Transaction storage transaction = transactions[_txIndex];
+        return (
+            transaction.to,
+            transaction.value,
+            transaction.data,
+            transaction.executed,
+            transaction.numConfirmations
+            );
+        
     	LibDiamond.DiamondStorage storage ds = LibDiamond.diamondStorage(); 
-        LibDiamond.getTransaction(uint _txIndex);
+        LibDiamond.getTransaction(_txIndex);
         }
 
     function submitTransaction(
@@ -62,25 +71,24 @@ contract MultiSigWallet is IMultiSig {
     ) external  {
         LibDiamond.DiamondStorage storage ds = LibDiamond.diamondStorage(); 
         LibDiamond.submitTransaction(
-        address _to,
-        uint _value,
-        bytes memory _data
+        _to,
+        _value,
+        _data
         );
     }
 
      function executeTransaction(uint _txIndex) external{
         LibDiamond.DiamondStorage storage ds = LibDiamond.diamondStorage(); 
-        LibDiamond.executeTransaction(uint _txIndex);
+        LibDiamond.executeTransaction(_txIndex);
      }
     function confirmTransaction(uint _txIndex) external{
         LibDiamond.DiamondStorage storage ds = LibDiamond.diamondStorage(); 
-        LibDiamond.confirmTransaction(uint _txIndex);
-
+        LibDiamond.confirmTransaction(_txIndex);
     }
 
     function revokeConfirmation(uint _txIndex) external{
         LibDiamond.DiamondStorage storage ds = LibDiamond.diamondStorage(); 
-        LibDiamond.revokeConfirmation(uint _txIndex);
+        LibDiamond.revokeConfirmation(_txIndex);
 
     }
      
