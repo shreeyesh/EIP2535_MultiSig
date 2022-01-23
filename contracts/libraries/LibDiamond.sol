@@ -183,12 +183,11 @@ library LibDiamond {
 
      function confirmTransaction(uint _txIndex)
         public
-        
-        
     {
+        LibDiamond.DiamondStorage storage ds = LibDiamond.diamondStorage(); 
         Transaction storage transaction = transactions[_txIndex];
         transaction.numConfirmations += 1;
-        isConfirmed[_txIndex][msg.sender] = true;
+        ds.isConfirmed[_txIndex][msg.sender] = true;
 
         emit ConfirmTransaction(msg.sender, _txIndex);
     }
@@ -197,13 +196,13 @@ library LibDiamond {
         public
         
         
-    {
+    {   LibDiamond.DiamondStorage storage ds = LibDiamond.diamondStorage(); 
         Transaction storage transaction = transactions[_txIndex];
 
-        require(isConfirmed[_txIndex][msg.sender], "tx not confirmed");
+        require(ds.isConfirmed[_txIndex][msg.sender], "tx not confirmed");
 
         transaction.numConfirmations -= 1;
-        isConfirmed[_txIndex][msg.sender] = false;
+        ds.isConfirmed[_txIndex][msg.sender] = false;
 
         emit RevokeConfirmation(msg.sender, _txIndex);
     }
