@@ -28,16 +28,16 @@ contract MultiSigWallet is IMultiSig {
     }
 	receive() external payable {
     	LibDiamond.DiamondStorage storage ds = LibDiamond.diamondStorage(); 
-		 payable(ds.contractOwner).transfer(_msgValue());
+		 payable(ds.contractOwner).transfer(msgValue());
 	}
 	
 	fallback() external payable {
     	LibDiamond.DiamondStorage storage ds = LibDiamond.diamondStorage(); 
-		payable(ds.contractOwner).transfer(_msgValue());
+		payable(ds.contractOwner).transfer(msgValue());
 	}
    
     // LibDiamond.DiamondStorage storage ds = LibDiamond.diamondStorage(); 
-    Transaction[] transactions;
+    // Transaction[] transactions;
     // DepositRecords storage deposit = ds.indDepositRecord[_account][_market][_commitment];
 
     function getTransaction(uint _txIndex)
@@ -50,8 +50,8 @@ contract MultiSigWallet is IMultiSig {
             bool executed,
             uint numConfirmations
         )
-        {
-            Transaction storage transaction = transactions[_txIndex];
+        {   LibDiamond.DiamondStorage storage ds = LibDiamond.diamondStorage(); 
+            ds.Transaction storage transaction = transactions[_txIndex];
         return (
             transaction.to,
             transaction.value,
@@ -60,7 +60,7 @@ contract MultiSigWallet is IMultiSig {
             transaction.numConfirmations
             );
         
-    	LibDiamond.DiamondStorage storage ds = LibDiamond.diamondStorage(); 
+    	
         LibDiamond.getTransaction(_txIndex);
         }
 

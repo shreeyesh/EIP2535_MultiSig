@@ -8,7 +8,7 @@ pragma experimental ABIEncoderV2;
 /******************************************************************************/
 import "../interfaces/IDiamondCut.sol";
 import "../interfaces/IMultiSig.sol";
-import "../interfaces/IAccessRegistry.sol";
+// import "../interfaces/IAccessRegistry.sol";
 
 
 library LibDiamond {
@@ -49,9 +49,10 @@ library LibDiamond {
         uint numConfirmations;
          // mapping from tx index => owner => bool
              mapping(uint => mapping(address => bool)) isConfirmed;
+                 Transaction[] /*public*/ transactions;
+
 
     }
-    Transaction[] public transactions;
     
         
     
