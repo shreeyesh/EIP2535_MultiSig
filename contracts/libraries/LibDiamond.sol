@@ -50,8 +50,6 @@ library LibDiamond {
          // mapping from tx index => owner => bool
              mapping(uint => mapping(address => bool)) isConfirmed;
                  Transaction[] /*public*/ transactions;
-
-
     }
     
         
@@ -130,8 +128,8 @@ library LibDiamond {
             bool executed,
             uint numConfirmations
         )
-    {
-     Transaction storage transaction = transactions[_txIndex];
+    {  LibDiamond.DiamondStorage storage ds = LibDiamond.diamondStorage(); 
+     Transaction storage transaction = ds.transactions[_txIndex];
         return (
             transaction.to,
             transaction.value,
@@ -146,9 +144,10 @@ library LibDiamond {
         uint _value,
         bytes memory _data
     ) public  {
-        uint txIndex = transactions.length;
+            	LibDiamond.DiamondStorage storage ds = LibDiamond.diamondStorage(); 
+        uint txIndex = ds.transactions.length;
 
-        transactions.push(
+        ds.transactions.push(
             Transaction({
                 to: _to,
                 value: _value,
@@ -163,8 +162,8 @@ library LibDiamond {
 
         function executeTransaction(uint _txIndex)
         public
-    {
-        Transaction storage transaction = transactions[_txIndex];
+    {   LibDiamond.DiamondStorage storage ds = LibDiamond.diamondStorage(); 
+        Transaction storage transaction = ds.transactions[_txIndex];
 
         require(
             transaction.numConfirmations >= numConfirmationsRequired,
@@ -186,7 +185,7 @@ library LibDiamond {
         public
     {
         LibDiamond.DiamondStorage storage ds = LibDiamond.diamondStorage(); 
-        Transaction storage transaction = transactions[_txIndex];
+        Transaction storage transaction = ds.transactions[_txIndex];
         transaction.numConfirmations += 1;
         ds.isConfirmed[_txIndex][msg.sender] = true;
 
@@ -198,7 +197,7 @@ library LibDiamond {
         
         
     {   LibDiamond.DiamondStorage storage ds = LibDiamond.diamondStorage(); 
-        Transaction storage transaction = transactions[_txIndex];
+        Transaction storage transaction = ds.transactions[_txIndex];
 
         require(ds.isConfirmed[_txIndex][msg.sender], "tx not confirmed");
 
@@ -213,7 +212,8 @@ library LibDiamond {
     }
 
     function getTransactionCount() public view returns (uint) {
-        return transactions.length;
+        LibDiamond.DiamondStorage storage ds = LibDiamond.diamondStorage(); 
+        return ds.transactions.length;
     }
 
     

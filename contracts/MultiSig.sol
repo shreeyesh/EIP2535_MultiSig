@@ -28,12 +28,12 @@ contract MultiSigWallet is IMultiSig {
     }
 	receive() external payable {
     	LibDiamond.DiamondStorage storage ds = LibDiamond.diamondStorage(); 
-		 payable(ds.contractOwner).transfer(msgValue());
+		 payable(ds.contractOwner).transfer(msg.value());
 	}
 	
 	fallback() external payable {
     	LibDiamond.DiamondStorage storage ds = LibDiamond.diamondStorage(); 
-		payable(ds.contractOwner).transfer(msgValue());
+		payable(ds.contractOwner).transfer(msg.value());
 	}
    
     // LibDiamond.DiamondStorage storage ds = LibDiamond.diamondStorage(); 
