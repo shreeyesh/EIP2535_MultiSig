@@ -14,11 +14,22 @@ import "../interfaces/IAccessRegistry.sol";
 library LibDiamond {
     bytes32 constant DIAMOND_STORAGE_POSITION = keccak256("diamond.standard.diamond.storage");
 
+    address[] public owners;
+    mapping(address => bool) public isOwner;
+    uint public numConfirmationsRequired;
     // Diamond Sructs
 
     struct FacetAddressAndSelectorPosition {
         address facetAddress;
         uint16 selectorPosition;
+    }
+
+    struct Transaction {
+        address to;
+        uint value;
+        bytes data;
+        bool executed;
+        uint numConfirmations;
     }
 
     struct DiamondStorage {
@@ -31,18 +42,15 @@ library LibDiamond {
     
 
         // MultiSig Sructs
-
-
-    // struct Transaction {
         address to;
         uint value;
         bytes data;
         bool executed;
         uint numConfirmations;
          // mapping from tx index => owner => bool
-    mapping(uint => mapping(address => bool)) /*public*/ isConfirmed;
+             mapping(uint => mapping(address => bool)) isConfirmed;
+
     }
-    
     Transaction[] public transactions;
     
         
