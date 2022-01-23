@@ -41,16 +41,10 @@ library LibDiamond {
         uint numConfirmations;
          // mapping from tx index => owner => bool
     mapping(uint => mapping(address => bool)) /*public*/ isConfirmed;
+    }
     
-
-    //  Transaction storage transaction = transactions[_txIndex];
-    //     return (
-    //         transaction.to,
-    //         transaction.value,
-    //         transaction.data,
-    //         transaction.executed,
-    //         transaction.numConfirmations
-    //         );
+    Transaction[] public transactions;
+    
         }
     
     // Events
@@ -127,6 +121,16 @@ library LibDiamond {
             bool executed,
             uint numConfirmations
         );
+        {
+     Transaction storage transaction = transactions[_txIndex];
+        return (
+            transaction.to,
+            transaction.value,
+            transaction.data,
+            transaction.executed,
+            transaction.numConfirmations
+            );
+    }
 
     function submitTransaction(
         address _to,
