@@ -45,7 +45,7 @@ library LibDiamond {
     
     Transaction[] public transactions;
     
-        }
+        
     
     // Events
 
@@ -120,8 +120,8 @@ library LibDiamond {
             bytes memory data,
             bool executed,
             uint numConfirmations
-        );
-        {
+        )
+    {
      Transaction storage transaction = transactions[_txIndex];
         return (
             transaction.to,
