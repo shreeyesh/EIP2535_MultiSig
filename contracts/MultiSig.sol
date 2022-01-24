@@ -93,10 +93,9 @@ contract MultiSigWallet is IMultiSig {
 
     }
      
-    function getOwners() external view returns (address[] memory) {
-        LibDiamond.DiamondStorage storage ds = LibDiamond.diamondStorage(); 
-        LibDiamond.getOwners();
-    } 
+       function getOwners() public view returns (address[] memory) {
+        return owners;
+    }
 
     function getTransactionCount() external view returns (uint){
         LibDiamond.DiamondStorage storage ds = LibDiamond.diamondStorage(); 

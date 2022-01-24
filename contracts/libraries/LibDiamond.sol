@@ -14,9 +14,9 @@ import "../interfaces/IMultiSig.sol";
 library LibDiamond {
     bytes32 constant DIAMOND_STORAGE_POSITION = keccak256("diamond.standard.diamond.storage");
 
-    address[] public owners;
-    mapping(address => bool) external isOwner;
-    uint external numConfirmationsRequired;
+    // address[] public owners;
+    // mapping(address => bool) public isOwner;
+    // uint public numConfirmationsRequired;
     // Diamond Sructs
 
     struct FacetAddressAndSelectorPosition {
@@ -167,10 +167,10 @@ library LibDiamond {
     {   LibDiamond.DiamondStorage storage ds = LibDiamond.diamondStorage(); 
         Transaction storage transaction = ds.transactions[_txIndex];
 
-        require(
-            transaction.numConfirmations >= numConfirmationsRequired,
-            "cannot execute tx"
-        );
+        // require(
+        //     transaction.numConfirmations >= numConfirmationsRequired,
+        //     "cannot execute tx"
+        // );
 
         transaction.executed = true;
 
@@ -209,9 +209,7 @@ library LibDiamond {
         emit RevokeConfirmation(msg.sender, _txIndex);
     }
 
-    function getOwners() public view returns (address[] memory) {
-        return owners;
-    }
+ 
 
     function getTransactionCount() public view returns (uint) {
         LibDiamond.DiamondStorage storage ds = LibDiamond.diamondStorage(); 
