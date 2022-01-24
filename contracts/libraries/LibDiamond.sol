@@ -30,9 +30,8 @@ library LibDiamond {
         bytes data;
         bool executed;
         uint numConfirmations;
-        Transaction[] /*public*/ transactions;
-
     }
+    
 
     struct DiamondStorage {
         // function selector => facet address and selector position in selectors array
@@ -53,6 +52,7 @@ library LibDiamond {
              mapping(uint => mapping(address => bool)) isConfirmed;
                  Transaction[] /*public*/ transactions;
     }
+    
     
         
     

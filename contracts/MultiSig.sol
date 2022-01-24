@@ -6,6 +6,7 @@ contract MultiSigWallet is IMultiSig {
     address[] public owners;
     mapping(address => bool) public isOwner;
     uint public numConfirmationsRequired;
+    
 
     constructor(address[] memory _owners, uint _numConfirmationsRequired) {
         require(_owners.length > 0, "owners required");
@@ -40,6 +41,11 @@ contract MultiSigWallet is IMultiSig {
     // Transaction[] transactions;
     // DepositRecords storage deposit = ds.indDepositRecord[_account][_market][_commitment];
 
+    // mapping from tx index => owner => bool
+             mapping(uint => mapping(address => bool)) isConfirmed;
+                 Transaction[] public transactions;
+    }
+
     function getTransaction(uint _txIndex)
         external
         view
@@ -51,8 +57,8 @@ contract MultiSigWallet is IMultiSig {
             uint numConfirmations
         )
         {   
-            // LibDiamond.DiamondStorage storage ds = LibDiamond.diamondStorage(); 
-            Transaction storage transaction = transactions[_txIndex];
+        LibDiamond.Transaction storage ts = LibDiamond.transactionStorage(); 
+        ts.Transaction storage transaction = transactions[_txIndex];
         return (
             transaction.to,
             transaction.value,
