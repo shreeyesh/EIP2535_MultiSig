@@ -15,8 +15,8 @@ library LibDiamond {
     bytes32 constant DIAMOND_STORAGE_POSITION = keccak256("diamond.standard.diamond.storage");
 
     address[] public owners;
-    mapping(address => bool) public isOwner;
-    uint public numConfirmationsRequired;
+    mapping(address => bool) external isOwner;
+    uint external numConfirmationsRequired;
     // Diamond Sructs
 
     struct FacetAddressAndSelectorPosition {
@@ -30,6 +30,8 @@ library LibDiamond {
         bytes data;
         bool executed;
         uint numConfirmations;
+        Transaction[] /*public*/ transactions;
+
     }
 
     struct DiamondStorage {

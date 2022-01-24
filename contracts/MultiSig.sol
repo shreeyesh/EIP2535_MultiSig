@@ -50,8 +50,9 @@ contract MultiSigWallet is IMultiSig {
             bool executed,
             uint numConfirmations
         )
-        {   LibDiamond.DiamondStorage storage ds = LibDiamond.diamondStorage(); 
-            ds.Transaction storage transaction = transactions[_txIndex];
+        {   
+            // LibDiamond.DiamondStorage storage ds = LibDiamond.diamondStorage(); 
+            Transaction storage transaction = transactions[_txIndex];
         return (
             transaction.to,
             transaction.value,

@@ -1,5 +1,5 @@
 const MultiSigWallet = artifacts.require("MultiSigWallet")
-async function deployDiamond() {
+async function deployMultiSig() {
 module.exports = function (deployer, network, accounts) {
   const owners = accounts.slice(0, 3)
   const numConfirmationsRequired = 2
